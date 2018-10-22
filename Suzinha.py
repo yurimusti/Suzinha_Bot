@@ -16,12 +16,12 @@ control = True
 
 def VerificarData(i):
     if now.minute == 50 and now.hour == 20:
-        MandarMensagem("Boa noite meu amor <3")
+        MandarMensagem("Boa noite meu amor ❤️️")
         i = 1
         print(now.minute)
 
     if now.hour == 7 and now.minute == 30:
-        MandarMensagem("Bom dia meu lindo <3")
+        MandarMensagem("Bom dia meu lindo ❤️️")
 
     return i
 
