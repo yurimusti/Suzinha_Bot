@@ -11,12 +11,11 @@ messagesDia = ["Bom dia gatão <3","Boooom diiia :3","Opa, bom dia amorzinho :3"
 
 messagesNoite = ["Boa noite meu lindo <3","Amooooooor! Boa noite hehe","BOOOOOAA NOITEEEEEEE <3","Dorme bem meu anjo :3 <3","Dorme bem, eu te amo <3","Nossa ! Essa lua tá linda igual você <3 haha","Um boa noite da sua Suzinha <3"]
 
-      
-def MandarMensagem(msg):
-    bot.sendMessage("671315312", msg)
-
+idsMessage = []
 
 now = datetime.now()
+
+count = 0
 
 horas_dia = 8
 minutos_dia = 30
@@ -28,20 +27,55 @@ def VerificarDia():
     global horas_dia
     global minutos_dia
     if now.hour == horas_dia and now.minute == minutos_dia:
-        MandarMensagem(random.choice(messagesDia))
+        MandarMensagemGeral(random.choice(messagesDia))
         minutos_dia-=1
         
 def VerificarNoite():
     global horas_noite
     global minutos_noite
     if now.hour == horas_noite and now.minute == minutos_noite:
-        MandarMensagem(random.choice(messagesNoite))
+        MandarMensagemGeral(random.choice(messagesNoite))
         minutos_noite-=1
+        
+      
+def MandarMensagemGeral(msg):
+    for r in idsMessage:
+        print(r)
+        bot.sendMessage(r, msg)
 
-while True:    
+def MandarMensagem(idUser, msg):
+    bot.sendMessage(idUser, msg)
+
+def VerificarIdEmArray(resp):
+        idUsuario = resp['message']['chat']['id']
+        
+        global idsMessage
+        count = 0
+        if idUsuario:
+                for r in idsMessage:
+                        if r == idUsuario: 
+                                count += 1
+                if count == 0:
+                        idsMessage.append(idUsuario)
+                        print(idUsuario)
+
+
+
+
+def ReceberMensagem():
+    resposta = bot.getUpdates()
+    count =0
+    if resposta:
+            for r in resposta:
+                VerificarIdEmArray(r)
+    
+        
+VerificarIdEmArray(ReceberMensagem())
+
+while True:
     VerificarDia()
     VerificarNoite()
+    #VerificarIdEmArray(ReceberMensagem())
     
-  
-      
+    
   
